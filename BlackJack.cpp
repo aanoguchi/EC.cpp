@@ -17,7 +17,23 @@ struct card {
 	int Rank;
 };
 // Make global variable for 5 cards and card total
-int card(1), card(2), card(3), card(4), card(5), cardTotal;
+// Don't use global variables! Instead create a data type for a hand, and pass it to functions.
+// int card(1), card(2), card(3), card(4), card(5), cardTotal;
+using Hand = vector<card>;
+struct GameState {
+	Hand dealer;
+	Hand player;
+	Deck deck;
+};
+// For example:
+// Don't store cardTotal separately, because it would need to be kept in sync with the current cards.
+// Instead calculate the cardTotal when it is needed with a function such as:
+int cardTotal(Hand h);
+// Pass a game state to every function that needs that information.
+// To update the game state return a new value. This allows asserts to work.
+GameState playerDrawCard(GameState gs);
+void promptUser(GameState gs);
+
 int main() {
 	cout << "Project: BlackJack Card Game" << endl;
 	cout << "****************************" << endl;
@@ -30,10 +46,16 @@ int main() {
 	
 	return 0;
 }
-// Function for deal cards
-void  playerDealCards() {
+// Make sure and use the template!
+void run() {
 	srand(time(NULL));
-	// Generate random card
+}
+// Possibly start with a sorted deck and then shuffle. Then drawing a card is a matter of a pop_back()
+// const vector<Card> SORTED_DECK = { 0, 1, 2, 3 };
+// Function for deal cards
+Hand  playerDealCards() {
+	// Use this to get a random card in the deck
+	// rand() % deck_size
 }
 void to_win(){
 }
